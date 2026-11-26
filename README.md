@@ -33,9 +33,9 @@ Payments ──Lambda invoke──> Plans (internal API)      Reminders ──La
 
 | Owner | Service | Code | Deploy script | AWS services |
 |---|---|---|---|---|
-| Student A | Plan & Schedule: interest, late fees, payoff quote | `services/plans/`, `frontend/plans.html`, `js/plans.js` | `infra/20-plans.sh` | API Gateway, Lambda, DynamoDB ×2, IAM, EventBridge, Secrets Manager, CloudWatch |
-| Student B | Payments & Balance: approval workflow, payoff, receipts | `services/payments/`, payment parts of `plan.html`, `js/dashboard.js` | `infra/30-payments.sh` | Lambda, DynamoDB (+ status index), S3, IAM, EventBridge, Secrets Manager, CloudWatch |
-| Student C | Reminders, Notifications & Monitoring | `services/reminders/`, `notifications.html`, `admin.html` | `infra/40-reminders.sh` | Lambda, DynamoDB ×3, EventBridge rule + Scheduler, SQS ×2, SNS, CloudWatch metrics + alarm, IAM, Secrets Manager + Brevo API |
+| mahmoud | Plan & Schedule: interest, late fees, payoff quote | `services/plans/`, `frontend/plans.html`, `js/plans.js` | `infra/20-plans.sh` | API Gateway, Lambda, DynamoDB ×2, IAM, EventBridge, Secrets Manager, CloudWatch |
+| othman | Payments & Balance: approval workflow, payoff, receipts | `services/payments/`, payment parts of `plan.html`, `js/dashboard.js` | `infra/30-payments.sh` | Lambda, DynamoDB (+ status index), S3, IAM, EventBridge, Secrets Manager, CloudWatch |
+| abdelrahman | Reminders, Notifications & Monitoring | `services/reminders/`, `notifications.html`, `admin.html` | `infra/40-reminders.sh` | Lambda, DynamoDB ×3, EventBridge rule + Scheduler, SQS ×2, SNS, CloudWatch metrics + alarm, IAM, Secrets Manager + Brevo API |
 | Group | Auth, shared code, secrets, website | `services/auth/`, `services/shared/`, `frontend/js/api.js, ui.js` | `infra/00-shared.sh`, `05-secrets.sh`, `10-auth.sh`, `90-frontend.sh` | S3 website, KMS, Secrets Manager, Neon |
 
 Each service has the same layers: `app.js` (routes + validation) → `*Service.js` (business rules)
