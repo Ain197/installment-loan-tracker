@@ -1,0 +1,28 @@
+# Who commits what, in which order. One line per commit:  STEP | commit message | files (space separated)
+# A = Plans & Schedule member   B = Payments & Balance member   C = Abdelrahman, Reminders & Monitoring (repo owner)
+C1|Set up repository: README, gitignore, npm project and team plan|.gitignore README.md services/package.json services/package-lock.json services/.env.example team/plan.txt team/commit-step.sh docs/TEAM.md
+C2|Shared: Secrets Manager loader, events, CloudWatch metrics and SNS alerts|services/shared/secrets.js services/shared/events.js services/shared/metrics.js services/shared/alerts.js
+C3|Reminders: reminder rules, escalation logic, email and data layer|services/reminders/reminderLogic.js services/reminders/repository.js services/reminders/email.js
+C4|Reminders: daily job, monitoring API and Lambda handler|services/reminders/reminderService.js services/reminders/app.js services/reminders/lambda.js
+C5|Tests: advanced features and Lambda (Floci) mode|services/test/features.test.js services/test/lambda.test.js
+C6|Frontend: emails page and lender desk|frontend/notifications.html frontend/js/notifications.js frontend/admin.html frontend/js/admin.js
+C7|Infra: shared resources, Secrets Manager + KMS and deploy tooling|infra/config.sh infra/build-zips.js infra/00-shared.sh infra/05-secrets.sh infra/rotate-secrets.sh infra/deploy-all.sh infra/deploy.env.example infra/preflight.sh infra/pull-lambda-image.sh infra/diagnose.sh infra/floci/docker-compose.yml deploy.cmd diagnose.cmd pull-lambda-image.cmd
+C8|Infra: Reminders on Floci (SNS, SQS, CloudWatch alarm, Scheduler) and ops scripts|infra/40-reminders.sh infra/alerts.sh infra/run-reminders.sh infra/logs.sh infra/reset.sh infra/check.sh check.cmd
+C9|Docs: test results and Postman collection|docs/test-results.md docs/postman_collection.json
+A1|Shared: errors, validation, money and date helpers|services/shared/errors.js services/shared/validate.js services/shared/money.js services/shared/dates.js
+A2|Shared: Express app factory and DynamoDB client|services/shared/http.js services/shared/db.js
+A3|Plans: schedule maths with interest, late fees and payoff quote|services/plans/schedule.js
+A4|Plans: data layer and business rules|services/plans/repository.js services/plans/planService.js
+A5|Plans: API routes and Lambda handler|services/plans/app.js services/plans/lambda.js
+A6|DynamoDB tables, local server and unit tests|services/scripts/tables.js services/scripts/create-tables.js services/local-server.js services/test/unit.test.js services/test/helpers.js
+A7|Frontend: design system and shared page helpers|frontend/css/style.css frontend/js/ui.js frontend/js/api.js frontend/js/config.js
+A8|Frontend: plans list and plan page|frontend/plans.html frontend/js/plans.js frontend/plan.html frontend/js/plan.js
+A9|Infra: Plans service and website on Floci|infra/20-plans.sh infra/90-frontend.sh
+B1|Shared: login tokens, roles and service-to-service client|services/shared/auth.js services/shared/serviceClient.js
+B2|Auth service with users in Neon Postgres|services/auth/app.js services/auth/authService.js services/auth/lambda.js services/auth/userRepository.js infra/neon/schema.sql
+B3|Payments: allocation rules and S3 receipts|services/payments/allocation.js services/payments/receipts.js
+B4|Payments: data layer and approval workflow|services/payments/repository.js services/payments/paymentService.js
+B5|Payments: API routes and Lambda handler|services/payments/app.js services/payments/lambda.js
+B6|API tests and demo data|services/test/api.test.js services/scripts/demo-memory.js
+B7|Frontend: login page and overview dashboard|frontend/index.html frontend/js/login.js frontend/dashboard.html frontend/js/dashboard.js
+B8|Infra: Auth and Payments on Floci|infra/10-auth.sh infra/30-payments.sh

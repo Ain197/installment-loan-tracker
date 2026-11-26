@@ -1,0 +1,41 @@
+{
+  "name": "loan-tracker-services",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Installment & Loan Tracker backend: auth, plans, payments and reminders services (Express on AWS Lambda)",
+  "main": "local-server.js",
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env --watch local-server.js",
+    "start": "node --env-file-if-exists=.env local-server.js",
+    "test": "node --test --test-concurrency=1 test/*.test.js",
+    "tables": "node --env-file-if-exists=.env scripts/create-tables.js",
+    "zip": "node ../infra/build-zips.js",
+    "demo": "node scripts/demo-memory.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cloudwatch": "^3.1176.0",
+    "@aws-sdk/client-dynamodb": "^3.1175.0",
+    "@aws-sdk/client-eventbridge": "^3.1175.0",
+    "@aws-sdk/client-lambda": "^3.1175.0",
+    "@aws-sdk/client-s3": "^3.1175.0",
+    "@aws-sdk/client-secrets-manager": "^3.1176.0",
+    "@aws-sdk/client-sns": "^3.1176.0",
+    "@aws-sdk/client-sqs": "^3.1175.0",
+    "@aws-sdk/lib-dynamodb": "^3.1175.0",
+    "@neondatabase/serverless": "^1.2.1",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "serverless-http": "^4.0.0"
+  },
+  "devDependencies": {
+    "adm-zip": "^0.6.1",
+    "aws-sdk-client-mock": "^4.1.0",
+    "dynalite": "^4.0.0",
+    "supertest": "^7.3.2"
+  }
+}

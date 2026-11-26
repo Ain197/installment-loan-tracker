@@ -1,0 +1,19 @@
+# dependencies and build output
+node_modules/
+infra/.build/
+infra/.tmp/
+
+# secrets: NEVER commit these
+.env
+.env.*
+!.env.example
+infra/deploy.env
+
+# Floci data folder (if you run Floci with persistence in this folder)
+floci-data/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
