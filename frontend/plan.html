@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan — Loan Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <p><a href="plans.html">All plans</a></p>
+
+    <div class="page-head">
+      <div>
+        <h1 id="title">Loading…</h1>
+        <div class="plan-meta" id="meta"></div>
+      </div>
+      <div class="actions" id="plan-actions">
+        <button class="secondary hidden" id="edit-btn">Edit / reschedule</button>
+        <button class="danger hidden" id="cancel-btn">Cancel plan</button>
+        <button class="danger hidden" id="delete-btn">Delete plan</button>
+      </div>
+    </div>
+
+    <section class="card" id="ribbon-card">
+      <div id="plan-ribbon"></div>
+    </section>
+
+    <div class="grid two">
+      <section class="card">
+        <div class="card-head"><h2>Balance</h2><span id="balance-badge"></span></div>
+        <div id="balance"><p class="muted">Loading…</p></div>
+      </section>
+
+      <section class="card" id="pay-card">
+        <div class="card-head"><h2>Record a payment</h2></div>
+        <p class="alert info small hidden" id="approval-note">Your payment waits for the lender's approval before it counts. Attach the receipt — it is required for approval.</p>
+        <form id="pay-form" novalidate>
+          <div class="row">
+            <div><label for="amount">Amount (EGP)</label><input id="amount" name="amount" type="number" data-type="number" min="0.01" step="0.01" required></div>
+            <div><label for="paidOn">Paid on</label><input id="paidOn" name="paidOn" type="date" required></div>
+          </div>
+          <div class="row">
+            <div><label for="method">Method</label>
+              <select id="method" name="method"><option value="CASH">Cash</option><option value="CARD">Card</option><option value="BANK_TRANSFER">Bank transfer</option><option value="MOBILE_WALLET">Mobile wallet</option><option value="OTHER">Other</option></select></div>
+            <div><label for="note">Note (optional)</label><input id="note" name="note" maxlength="200"></div>
+          </div>
+          <div class="row">
+            <div><label for="receipt">Receipt (PDF, PNG or JPG, max 2 MB)</label><input id="receipt" type="file" accept="application/pdf,image/png,image/jpeg"></div>
+          </div>
+          <div class="actions">
+            <button type="submit">Record payment</button>
+            <button type="button" class="secondary" id="payoff-btn">Pay off early…</button>
+          </div>
+          <p class="small muted" style="margin:.6rem 0 0">Money goes to the oldest unpaid instalment first (late fee, then interest, then principal); extra rolls over to the next one.</p>
+        </form>
+        <p id="pay-closed" class="muted hidden"></p>
+      </section>
+    </div>
+
+    <section class="card">
+      <div class="card-head"><h2>Schedule</h2><span class="muted small" id="schedule-note"></span></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>#</th><th>Due date</th><th class="num">Principal</th><th class="num">Interest</th><th class="num">Late fee</th><th class="num">Amount</th><th class="num">Paid</th><th class="num">Left</th><th>Status</th><th></th></tr></thead>
+        <tbody id="schedule"></tbody>
+      </table></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Payments</h2>
+        <label class="check small"><input type="checkbox" id="show-reversed"> Show reversed</label>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Paid on</th><th class="num">Amount</th><th>Status</th><th>Method</th><th>Applied to</th><th>Receipt</th><th></th></tr></thead>
+        <tbody id="payments"></tbody>
+      </table></div>
+    </section>
+
+    <div class="grid two">
+      <section class="card">
+        <div class="card-head"><h2>Reminders</h2></div>
+        <form id="rule-form" novalidate>
+          <label class="check"><input type="checkbox" name="enabled"> Email me before each due date</label>
+          <div style="margin:.8rem 0">
+            <label>Days before the due date</label>
+            <div class="actions" id="day-options"></div>
+          </div>
+          <div style="margin-bottom:.8rem"><label for="rule-email">Send to</label><input id="rule-email" name="email" type="email"></div>
+          <label class="check"><input type="checkbox" name="overdueAlerts"> Alert me when an instalment is late</label>
+          <label class="check" style="margin:.4rem 0 1rem"><input type="checkbox" name="paymentConfirmations"> Confirm every payment by email</label>
+          <button type="submit">Save reminders</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><h2>Emails for this plan</h2></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>When</th><th>Type</th><th>Status</th></tr></thead>
+          <tbody id="notes"></tbody>
+        </table></div>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="edit-dialog">
+    <h2>Edit or reschedule</h2>
+    <p class="small muted" id="edit-note"></p>
+    <form id="edit-form" novalidate>
+      <div class="row">
+        <div><label for="e-title">Title</label><input id="e-title" name="title"></div>
+        <div><label for="e-provider">Lender / shop</label><input id="e-provider" name="provider"></div>
+      </div>
+      <div class="row">
+        <div><label for="e-count">Number of instalments</label><input id="e-count" name="instalmentCount" type="number" data-type="number" min="1" max="120"></div>
+        <div><label for="e-frequency">Frequency</label>
+          <select id="e-frequency" name="frequency"><option value="MONTHLY">Monthly</option><option value="BIWEEKLY">Every 2 weeks</option><option value="WEEKLY">Weekly</option></select></div>
+      </div>
+      <div class="row money-fields">
+        <div><label for="e-total">Total amount</label><input id="e-total" name="totalAmount" type="number" data-type="number" step="0.01"></div>
+        <div><label for="e-down">Down payment</label><input id="e-down" name="downPayment" type="number" data-type="number" step="0.01"></div>
+        <div><label for="e-start">First due date</label><input id="e-start" name="startDate" type="date"></div>
+      </div>
+      <div class="row money-fields">
+        <div><label for="e-rate">Annual interest (%)</label><input id="e-rate" name="annualRate" type="number" data-type="number" min="0" max="100" step="0.01"></div>
+        <div><label for="e-method">Interest method</label><select id="e-method" name="interestMethod"><option value="REDUCING">Reducing balance</option><option value="FLAT">Flat rate</option></select></div>
+      </div>
+      <fieldset>
+        <legend><label class="check" style="margin:0"><input type="checkbox" id="e-fees"> Charge late fees</label></legend>
+        <div class="row">
+          <div><label for="e-grace">Grace (days)</label><input id="e-grace" type="number" min="0" max="60"></div>
+          <div><label for="e-feetype">Type</label><select id="e-feetype"><option value="FIXED">Fixed (EGP)</option><option value="PERCENT">% of unpaid</option></select></div>
+          <div><label for="e-feevalue">Fee</label><input id="e-feevalue" name="lateFeePolicy.value" type="number" step="0.01"></div>
+        </div>
+      </fieldset>
+      <div class="actions"><button type="submit">Save changes</button><button type="button" class="secondary" data-close>Close</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="reason-dialog">
+    <h2 id="reason-title">Reason</h2>
+    <p class="small muted" id="reason-note"></p>
+    <form id="reason-form" novalidate>
+      <div style="margin-bottom:1rem"><label for="reason">Reason</label><input id="reason" name="reason" minlength="5" maxlength="200" required></div>
+      <div class="actions"><button type="submit" class="danger" id="reason-submit">Confirm</button><button type="button" class="secondary" data-close>Close</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="payoff-dialog">
+    <h2>Pay off early</h2>
+    <div id="quote"><p class="muted">Getting today's payoff amount…</p></div>
+    <form id="payoff-form" novalidate>
+      <div class="row">
+        <div><label for="p-paidOn">Paid on</label><input id="p-paidOn" name="paidOn" type="date"></div>
+        <div><label for="p-method">Method</label>
+          <select id="p-method" name="method"><option value="BANK_TRANSFER">Bank transfer</option><option value="CASH">Cash</option><option value="CARD">Card</option><option value="MOBILE_WALLET">Mobile wallet</option><option value="OTHER">Other</option></select></div>
+      </div>
+      <div class="row customer-only"><div><label for="p-receipt">Receipt (required for approval)</label><input id="p-receipt" type="file" accept="application/pdf,image/png,image/jpeg"></div></div>
+      <div class="actions"><button type="submit">Pay off now</button><button type="button" class="secondary" data-close>Close</button></div>
+    </form>
+  </dialog>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/plan.js"></script>
+</body>
+</html>

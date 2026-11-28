@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plans — Loan Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <div class="page-head">
+      <div><h1>Plans</h1><p>Every instalment plan and loan, with what is left on each.</p></div>
+      <button id="toggle-new">Add a plan</button>
+    </div>
+
+    <section class="card hidden" id="new-card">
+      <div class="card-head"><h2>New plan</h2><button class="secondary small" id="close-new" type="button">Close</button></div>
+      <form id="new-form" novalidate>
+        <div class="row">
+          <div><label for="title">What are you paying for?</label><input id="title" name="title" placeholder="e.g. iPhone 16, car loan" required></div>
+          <div><label for="provider">Lender / shop</label><input id="provider" name="provider" placeholder="e.g. B.TECH, Valu, NBE" required></div>
+          <div class="admin-only hidden"><label for="ownerId">Customer</label><select id="ownerId" name="ownerId"><option value="">Myself</option></select></div>
+        </div>
+        <div class="row">
+          <div><label for="totalAmount">Total amount (EGP)</label><input id="totalAmount" name="totalAmount" data-type="number" type="number" min="1" step="0.01" required></div>
+          <div><label for="downPayment">Down payment (EGP)</label><input id="downPayment" name="downPayment" data-type="number" type="number" min="0" step="0.01" value="0"></div>
+          <div><label for="instalmentCount">Number of instalments</label><input id="instalmentCount" name="instalmentCount" data-type="number" type="number" min="1" max="120" step="1" required></div>
+          <div><label for="frequency">Frequency</label>
+            <select id="frequency" name="frequency"><option value="MONTHLY">Monthly</option><option value="BIWEEKLY">Every 2 weeks</option><option value="WEEKLY">Weekly</option></select></div>
+          <div><label for="startDate">First due date</label><input id="startDate" name="startDate" type="date" required></div>
+        </div>
+        <fieldset>
+          <legend>Interest (loans)</legend>
+          <div class="row">
+            <div><label for="annualRate">Annual interest rate (%)</label><input id="annualRate" name="annualRate" data-type="number" type="number" min="0" max="100" step="0.01" value="0"></div>
+            <div><label for="interestMethod">Interest method</label>
+              <select id="interestMethod" name="interestMethod"><option value="REDUCING">Reducing balance (bank loans)</option><option value="FLAT">Flat rate (shops)</option></select></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend><label class="check" style="margin:0"><input type="checkbox" id="feesOn"> Charge late fees</label></legend>
+          <div class="row" id="fee-fields">
+            <div><label for="graceDays">Grace period (days)</label><input id="graceDays" type="number" min="0" max="60" value="3"></div>
+            <div><label for="feeType">Fee type</label><select id="feeType"><option value="FIXED">Fixed amount (EGP)</option><option value="PERCENT">% of what is unpaid</option></select></div>
+            <div><label for="feeValue">Fee</label><input id="feeValue" name="lateFeePolicy.value" type="number" min="0.01" step="0.01" value="50"></div>
+          </div>
+        </fieldset>
+        <div class="actions">
+          <button type="submit">Create plan and schedule</button>
+          <span class="muted small" id="preview"></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <form id="search-form" class="row" style="align-items:end">
+        <div><label for="q">Search</label><input id="q" name="q" placeholder="Title, shop or customer"></div>
+        <div><label for="status">Status</label>
+          <select id="status" name="status"><option value="">Any</option><option value="ACTIVE">Active</option><option value="COMPLETED">Completed</option><option value="CANCELLED">Cancelled</option></select></div>
+        <div><label for="overdue">Overdue</label>
+          <select id="overdue" name="overdue"><option value="">Any</option><option value="true">Only overdue</option><option value="false">Not overdue</option></select></div>
+        <div><label for="dueBefore">Next due before</label><input id="dueBefore" name="dueBefore" type="date"></div>
+        <div><label for="sort">Sort by</label>
+          <select id="sort" name="sort"><option value="nextDue">Next due date</option><option value="remaining">Remaining (high first)</option><option value="created">Newest</option><option value="title">Title</option></select></div>
+        <div class="actions"><button type="submit">Search</button><button type="reset" class="secondary">Clear</button></div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2 id="result-title">Plans</h2></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Plan</th><th class="admin-only hidden">Customer</th><th>Status</th><th>Terms</th><th>Instalments</th><th>Next due</th><th class="num">Left to pay</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+      </table></div>
+      <div id="legend"></div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/plans.js"></script>
+</body>
+</html>
