@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in — Loan Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="auth-wrap">
+    <section class="auth-side">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Loan Tracker</a>
+      <h1>Every instalment, before it is due.</h1>
+      <p>Add a plan once and see its whole schedule, what you have paid and what is left. You get an email a few days before each due date.</p>
+      <div class="demo-plan" aria-hidden="true">
+        <div class="top"><b>iPhone 16 · B.TECH</b><span>EGP 31,860 left</span></div>
+        <div class="ribbon large"><span class="PAID" style="animation-delay:70ms"></span><span class="PAID" style="animation-delay:140ms"></span><span class="PAID" style="animation-delay:210ms"></span><span class="PAID" style="animation-delay:280ms"></span><span class="PAID" style="animation-delay:350ms"></span><span class="NEXT" style="animation-delay:420ms"></span><span class="" style="animation-delay:490ms"></span><span class="" style="animation-delay:560ms"></span><span class="" style="animation-delay:630ms"></span><span class="" style="animation-delay:700ms"></span><span class="" style="animation-delay:770ms"></span><span class="" style="animation-delay:840ms"></span></div>
+        <div class="foot"><span>5 of 12 paid</span><span>Next: EGP 5,310 on 2 Dec</span></div>
+      </div>
+    </section>
+
+    <main class="auth-main">
+      <div class="auth-box">
+        <div class="tabs" role="tablist">
+          <button type="button" class="active" data-tab="login" role="tab">Log in</button>
+          <button type="button" data-tab="register" role="tab">Create account</button>
+        </div>
+
+        <div id="notice" class="alert info hidden"></div>
+
+        <form id="login-form" novalidate>
+          <div><label for="login-email">Email</label><input id="login-email" name="email" type="email" autocomplete="email" required></div>
+          <div><label for="login-password">Password</label><input id="login-password" name="password" type="password" autocomplete="current-password" required></div>
+          <button type="submit">Log in</button>
+        </form>
+
+        <form id="register-form" class="hidden" novalidate>
+          <div><label for="reg-name">Full name</label><input id="reg-name" name="name" autocomplete="name" required></div>
+          <div><label for="reg-email">Email</label><input id="reg-email" name="email" type="email" autocomplete="email" required></div>
+          <div><label for="reg-password">Password (at least 8 characters)</label><input id="reg-password" name="password" type="password" autocomplete="new-password" minlength="8" required></div>
+          <button type="submit">Create account</button>
+        </form>
+
+        <p class="api-status" id="api-status">Checking the API…</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
