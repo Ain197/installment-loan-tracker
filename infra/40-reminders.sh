@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
-# Service 3 — Reminders, Notifications & Monitoring (Student C)
-# The daily job: late fees (via Plans) -> reminders -> escalations -> metrics -> alerts -> run history.
-# AWS services: DynamoDB (LoanReminderRules, LoanNotifications, LoanReminderRuns), SQS (dead-letter
-#               queue for failed emails + alerts inbox), SNS (alerts topic), CloudWatch (Logs, custom
-#               metrics, alarm), EventBridge (rule + Scheduler), IAM, Lambda, API Gateway,
-#               Secrets Manager + KMS. External API: Brevo email.
+# Reminders service. Daily job: late fees (via Plans) -> reminders -> escalations -> metrics -> alerts -> run history.
+# DynamoDB (LoanReminderRules, LoanNotifications, LoanReminderRuns), SQS (dead-letter queue + alerts inbox),
+# SNS, CloudWatch (logs, metrics, alarm), EventBridge (rule + Scheduler), IAM, Lambda, API Gateway,
+# Secrets Manager. External API: Brevo.
 source "$(dirname "$0")/config.sh"
 
 say "Reminders: DynamoDB tables"

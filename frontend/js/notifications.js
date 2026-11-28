@@ -1,4 +1,3 @@
-// Notification log (GET /api/notifications) with retry for failed emails
 (function () {
   renderNav('notifications.html');
   const form = document.getElementById('filter-form');

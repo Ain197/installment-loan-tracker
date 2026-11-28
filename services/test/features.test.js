@@ -1,5 +1,4 @@
-// Tests for the advanced features: interest, late fees, early payoff, payment approval,
-// escalation + monitoring, Secrets Manager and CloudWatch/SNS.
+// Interest, late fees, payoff, approval, escalation, secrets and metrics.
 const { test, describe, before, after } = require('node:test');
 const assert = require('node:assert/strict');
 const { mockClient } = require('aws-sdk-client-mock');

@@ -1,6 +1,5 @@
 @echo off
-REM Double-click to deploy the whole Loan Tracker on Floci. Output is saved in infra\deploy-log.txt
-REM (Claude reads that file to fix any problem). Docker Desktop and Floci must be running first.
+REM Deploys the whole app on Floci (Docker Desktop must be running). Log: infra\deploy-log.txt
 cd /d "%~dp0"
 set "GITBASH=C:\Program Files\Git\bin\bash.exe"
 if not exist "%GITBASH%" set "GITBASH=%LOCALAPPDATA%\Programs\Git\bin\bash.exe"

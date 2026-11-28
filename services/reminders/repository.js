@@ -1,6 +1,5 @@
-// Data layer for reminder rules and the notification log (DynamoDB). Only this service writes them.
-//   LoanReminderRules   key: planId
-//   LoanNotifications   key: notificationId   indexes ownerId-index, planId-index (both sorted by createdAt)
+// LoanReminderRules   key: planId
+// LoanNotifications   key: notificationId, indexes ownerId-index and planId-index (by createdAt)
 const { GetCommand, PutCommand, UpdateCommand, DeleteCommand, QueryCommand, ScanCommand } = require('@aws-sdk/lib-dynamodb');
 const { db, readAll, table } = require('../shared/db');
 

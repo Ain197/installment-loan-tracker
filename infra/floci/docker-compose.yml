@@ -1,4 +1,4 @@
-# Floci (local AWS) for this project. Use the one from the course labs if you already have it running.
+# Floci (local AWS) for this project.
 # Start:  docker compose -f infra/floci/docker-compose.yml up -d
 services:
   floci:

@@ -1,5 +1,3 @@
-// Business rules for reminders: rules per plan, the daily check, notification log, retries,
-// and reactions to events from the other services.
 const repo = require('./repository');
 const { remindersDue, escalationsDue, ids, DEFAULT_DAYS, ESCALATION_DAYS } = require('./reminderLogic');
 const { putMetrics } = require('../shared/metrics');
@@ -24,8 +22,6 @@ function defaultRule(plan) {
   };
 }
 
-// ---- reminder rules ----
-
 async function getRuleFor(user, planId) {
   const plan = await getPlan(planId);
   assertCanAccess(user, plan.ownerId);
@@ -45,8 +41,6 @@ async function updateRule(user, planId, changes) {
   rule.daysBefore = [...new Set(rule.daysBefore)].sort((a, b) => b - a);
   return repo.putRule(rule);
 }
-
-// ---- sending (shared by the daily check, events and retries) ----
 
 function messageFor(n, plan) {
   const greeting = `Hello ${plan.ownerName || ''},`.replace(' ,', ',');
@@ -135,8 +129,6 @@ async function deliver(n, plan, rule, { trigger, allowFailed = false } = {}) {
   }
   return { status: saved.status, notificationId: n.notificationId, error: saved.error || undefined };
 }
-
-// ---- the daily check (EventBridge schedule, or an admin pressing "Run check now") ----
 
 async function runCheck({ asOf = today(), trigger = 'schedule' } = {}) {
   const startedAt = new Date().toISOString();
@@ -255,8 +247,6 @@ async function monitoringOverview() {
   };
 }
 
-// ---- dashboard and log ----
-
 async function upcoming(user, days) {
   const plans = await listPlans(isAdmin(user) ? { status: 'ACTIVE' } : { ownerId: user.id, status: 'ACTIVE' });
   const asOf = today();
@@ -308,8 +298,6 @@ async function retry(user, notificationId) {
   if (outcome.status === 'ALREADY_SENT') throw conflict('NOT_FAILED', 'This notification is no longer failed.');
   return repo.getNotification(notificationId);
 }
-
-// ---- events from Plans and Payments ----
 
 async function handleEvent(detailType, detail) {
   switch (detailType) {

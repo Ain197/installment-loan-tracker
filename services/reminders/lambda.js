@@ -1,8 +1,4 @@
-// Lambda entry point (handler = reminders/lambda.handler).
-// This function is started by three different things:
-//   1. API Gateway (HTTP request)       -> the Express app, like the other services
-//   2. EventBridge rule (bus event)     -> PlanCreated, PaymentRecorded, ... from Plans and Payments
-//   3. EventBridge Scheduler (daily)    -> { "action": "run-reminders" } runs the due-date check
+// Started by API Gateway (HTTP), the EventBridge rule (events) or EventBridge Scheduler (daily run).
 const serverless = require('serverless-http');
 const app = require('./app');
 const service = require('./reminderService');

@@ -1,6 +1,4 @@
-// Operational alerts for the lender/admin on an SNS topic (ALERTS_TOPIC_ARN):
-// long-overdue plans (escalations) and failed reminder emails. The CloudWatch alarm
-// publishes to the same topic. Without a topic (your PC, tests) alerts are only logged.
+// Lender alerts on the SNS topic ALERTS_TOPIC_ARN; only logged when no topic is set.
 const { SNSClient, PublishCommand } = require('@aws-sdk/client-sns');
 
 let client;

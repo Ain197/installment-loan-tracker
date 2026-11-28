@@ -1,12 +1,5 @@
-// Business events (PlanCreated, PaymentRecorded, ...) that other services react to.
-//
-// On Floci / AWS: published to the EventBridge bus named EVENT_BUS_NAME. An EventBridge rule
-//   sends them to the Reminders Lambda (see infra/40-reminders.sh).
-// On your PC:      there is no bus, so the event is delivered straight to the Reminders
-//   service's internal route, which runs the same handler.
-//
-// Publishing never breaks the main action: if it fails, the error is logged and the
-// payment or plan is still saved.
+// Business events go to the EventBridge bus EVENT_BUS_NAME on Floci, or straight to the Reminders
+// service when running locally. A failed publish is logged and never breaks the main action.
 const { EventBridgeClient, PutEventsCommand } = require('@aws-sdk/client-eventbridge');
 const { callService } = require('./serviceClient');
 

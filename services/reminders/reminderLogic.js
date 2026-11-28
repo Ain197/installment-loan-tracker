@@ -1,4 +1,3 @@
-// Pure business logic: which reminders a plan needs today (no database, easy to unit test).
 const { daysBetween } = require('../shared/dates');
 
 const DEFAULT_DAYS = () => (process.env.DEFAULT_REMINDER_DAYS || '3,1')

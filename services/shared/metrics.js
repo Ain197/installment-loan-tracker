@@ -1,6 +1,4 @@
-// Custom CloudWatch metrics (namespace METRICS_NAMESPACE, e.g. "LoanTracker").
-// Used for the dashboard of the daily run and for the alarm on failed reminder emails.
-// Without METRICS_NAMESPACE (your PC, tests) the values are only written to the log.
+// Custom CloudWatch metrics (METRICS_NAMESPACE); only logged when no namespace is set.
 const { CloudWatchClient, PutMetricDataCommand } = require('@aws-sdk/client-cloudwatch');
 
 let client;

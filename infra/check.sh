@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Smoke test of the deployed app on Floci. Prints PASS/FAIL per check (copy the output into
-# docs/test-results.md as deployment evidence).
+# Smoke test of the deployed app on Floci: PASS/FAIL per check.
 source "$(dirname "$0")/config.sh"
 set +e
 URL="$(api_url)"

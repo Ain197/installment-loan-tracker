@@ -1,4 +1,3 @@
-// Admin page: approval queue (Payments), daily job + monitoring (Reminders), overdue report (Plans), accounts (Auth)
 (function () {
   requireLogin({ admin: true });
   renderNav('admin.html');
@@ -9,7 +8,6 @@
   form.asOf.value = todayIso();
   document.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => b.closest('dialog').close()));
 
-  // ---- approvals ----
   async function loadPending() {
     try {
       const { payments, count } = await api('GET', '/api/payments/pending');
@@ -62,7 +60,6 @@
     });
   });
 
-  // ---- daily job ----
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     submitting(form, async () => {
@@ -81,7 +78,6 @@
     });
   });
 
-  // ---- monitoring ----
   async function loadMonitoring() {
     try {
       const { overview: o } = await api('GET', '/api/monitoring/overview');
@@ -102,7 +98,6 @@
   }
   $('refresh-monitoring').addEventListener('click', loadMonitoring);
 
-  // ---- overdue + users ----
   async function loadOverdue() {
     try {
       const { plans } = await api('GET', '/api/plans?overdue=true&status=ACTIVE&sort=remaining');

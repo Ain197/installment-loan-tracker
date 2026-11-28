@@ -1,6 +1,4 @@
-// Runs the services the way Floci does: through their Lambda handlers, with API Gateway
-// (HTTP API v2) events, EventBridge events, the daily schedule event, and service-to-service
-// calls made with Lambda Invoke instead of HTTP.
+// Runs the services through their Lambda handlers with API Gateway, EventBridge and Invoke events.
 const { test, describe, before, after } = require('node:test');
 const assert = require('node:assert/strict');
 const { mockClient } = require('aws-sdk-client-mock');

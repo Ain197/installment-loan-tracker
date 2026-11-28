@@ -1,14 +1,6 @@
-// Secrets come from AWS Secrets Manager, not from the code or the Lambda environment.
-//
-// Each Lambda only gets the NAMES of the secrets it may read (SECRET_IDS, e.g.
-// "loan-tracker/app,loan-tracker/neon"), and its IAM role allows GetSecretValue on exactly those.
-// Every secret is a JSON object such as {"JWT_SECRET":"...","INTERNAL_TOKEN":"..."}; its keys are
-// loaded into process.env, so the rest of the code just reads process.env.JWT_SECRET.
-//
-// Values are cached for SECRETS_TTL_SECONDS (default 5 minutes). After a rotation
-// (infra/rotate-secrets.sh) every Lambda picks up the new value within that time, without a redeploy.
-//
-// On your PC with no SECRET_IDS, nothing is loaded and the values come from services/.env.
+// Each Lambda gets only the names of its secrets (SECRET_IDS) and IAM access to read them. The JSON keys
+// are loaded into process.env and cached for SECRETS_TTL_SECONDS, so a rotation needs no redeploy.
+// Without SECRET_IDS (local run) the values come from services/.env.
 const { SecretsManagerClient, GetSecretValueCommand } = require('@aws-sdk/client-secrets-manager');
 
 let client;
@@ -54,7 +46,7 @@ async function loadSecrets({ force = false } = {}) {
   await inFlight;
 }
 
-// Shown on the health route as evidence (names only, never values)
+// Names only, never values
 function secretsInfo() {
   const ids = secretIds();
   return ids.length

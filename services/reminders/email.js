@@ -1,5 +1,4 @@
 // External API: Brevo transactional email (https://developers.brevo.com/reference/sendtransacemail).
-// The API key lives only in the environment (BREVO_API_KEY), never in the code or the repository.
 // Without a key (e.g. in tests) emails are written to the log instead, and marked provider "console".
 const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs');
 

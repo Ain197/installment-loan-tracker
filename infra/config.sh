@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Shared settings and helpers for every infra script. Each script does: source infra/config.sh
-# Works in Git Bash on Windows (like Labs 7 and 8), and on macOS/Linux.
+# Works in Git Bash on Windows and on macOS/Linux.
 
 set -euo pipefail
 export MSYS_NO_PATHCONV=1          # stop Git Bash from turning /api/... into C:/Program Files/...
@@ -16,7 +16,6 @@ fi
 TMP_DIR="$INFRA_DIR/.tmp"
 mkdir -p "$TMP_DIR"
 
-# ---- secrets and personal settings (never committed) ----
 if [ ! -f "$INFRA_DIR/deploy.env" ]; then
   echo "Missing infra/deploy.env. Copy infra/deploy.env.example to infra/deploy.env and fill it in." >&2
   exit 1
@@ -32,7 +31,6 @@ while IFS= read -r line || [ -n "$line" ]; do
 done < "$INFRA_DIR/deploy.env"
 unset line key value
 
-# ---- where Floci is (same account and region as the labs) ----
 export AWS_ENDPOINT_URL="${AWS_ENDPOINT_URL:-http://localhost:4566}"
 export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-east-1}"
 export AWS_REGION="$AWS_DEFAULT_REGION"
@@ -41,7 +39,6 @@ export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY:-test}"
 unset AWS_PROFILE || true
 REGION="$AWS_DEFAULT_REGION"
 
-# ---- resource names (one place) ----
 PREFIX="loan-tracker"
 API_NAME="$PREFIX-http-api"
 EVENT_BUS="$PREFIX-bus"
@@ -75,7 +72,6 @@ T_RUNS="LoanReminderRuns"
 WEBSITE_ORIGIN="${WEBSITE_ORIGIN:-http://localhost:4566}"
 CORS_ORIGINS="${CORS_ORIGINS:-$WEBSITE_ORIGIN,http://localhost:3000}"
 
-# ---- helpers ----
 # Every AWS CLI call goes to Floci (explicit --endpoint-url works with AWS CLI v1 and v2)
 awsl() { aws --endpoint-url "$AWS_ENDPOINT_URL" --region "$REGION" "$@"; }
 say()  { printf '\n\033[1;36m== %s\033[0m\n' "$*"; }
