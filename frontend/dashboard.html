@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overview — Loan Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <div class="page-head">
+      <div>
+        <h1 id="greeting">Overview</h1>
+        <p id="subtitle">What you owe, and what is due next.</p>
+      </div>
+      <a class="button" href="plans.html#new">Add a plan</a>
+    </div>
+
+    <section class="headline">
+      <div class="owe">
+        <p class="lead" id="s-month-label">Due this month</p>
+        <div class="big" id="s-month">…</div>
+        <div class="sub">
+          <div>Left on all plans<b id="s-remaining">…</b></div>
+          <div class="late">Overdue<b id="s-overdue">…</b></div>
+          <div>Active plans<b id="s-plans">…</b></div>
+          <div id="s-fees-box" class="hidden">Late fees<b id="s-fees">…</b></div>
+          <div id="s-pending-box" class="hidden">Waiting for you<b><a href="admin.html" id="s-pending">…</a></b></div>
+        </div>
+      </div>
+      <div class="card" style="margin:0">
+        <div class="card-head"><h2>Due in the next 6 months</h2></div>
+        <div class="bars" id="bars" role="img" aria-label="Amount due per month for the next six months"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Your plans</h2><a href="plans.html">See all plans</a></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Plan</th><th id="owner-col" class="hidden">Customer</th><th>Instalments</th><th>Next due</th><th class="num">Left to pay</th></tr></thead>
+        <tbody id="plans"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
+      </table></div>
+      <div id="legend"></div>
+    </section>
+
+    <div class="grid two">
+      <section class="card">
+        <div class="card-head">
+          <h2>Coming up</h2>
+          <select id="days" aria-label="Period" style="width:auto">
+            <option value="7">Next 7 days</option>
+            <option value="30" selected>Next 30 days</option>
+            <option value="90">Next 90 days</option>
+          </select>
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Due</th><th>Plan</th><th class="num">Amount</th></tr></thead>
+          <tbody id="upcoming"><tr><td colspan="3" class="empty">Loading…</td></tr></tbody>
+        </table></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><h2>Overdue</h2></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Was due</th><th>Plan</th><th class="num">Still due</th></tr></thead>
+          <tbody id="overdue"><tr><td colspan="3" class="empty">Loading…</td></tr></tbody>
+        </table></div>
+      </section>
+    </div>
+
+    <section class="card">
+      <div class="card-head"><h2>Latest emails</h2><a href="notifications.html">All emails</a></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>When</th><th>Email</th><th>Plan</th><th>Status</th></tr></thead>
+        <tbody id="notes"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody>
+      </table></div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
