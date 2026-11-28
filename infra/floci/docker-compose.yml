@@ -1,0 +1,16 @@
+# Floci (local AWS) for this project.
+# Start:  docker compose -f infra/floci/docker-compose.yml up -d
+services:
+  floci:
+    image: floci/floci:latest
+    container_name: floci
+    ports:
+      - "4566:4566"
+    environment:
+      - FLOCI_DEFAULT_REGION=us-east-1
+      # keep tables, buckets and functions after a restart
+      - FLOCI_STORAGE_MODE=hybrid
+      - FLOCI_STORAGE_PERSISTENT_PATH=/data
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock   # Lambda functions run as Docker containers
+      - ./floci-data:/data

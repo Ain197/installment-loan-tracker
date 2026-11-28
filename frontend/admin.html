@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Loan Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <div class="page-head">
+      <div><h1>Lender desk</h1><p>Approve payments, run the daily job, watch the alerts and see who is behind.</p></div>
+    </div>
+
+    <section class="card">
+      <div class="card-head"><h2 id="pending-title">Payments waiting for approval</h2></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Submitted</th><th>Customer / plan</th><th class="num">Amount</th><th>Kind</th><th>Receipt</th><th></th></tr></thead>
+        <tbody id="pending"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Run the daily job</h2></div>
+      <p class="muted small">EventBridge Scheduler runs this every morning: late fees → reminders → escalations → CloudWatch metrics → SNS alerts. Run it now, or pick another date to see what that day would do.</p>
+      <form id="run-form" class="row" style="align-items:end" novalidate>
+        <div><label for="asOf">As of date</label><input id="asOf" name="asOf" type="date"></div>
+        <div class="actions"><button type="submit">Run now</button></div>
+      </form>
+      <div id="run-result"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Monitoring</h2><button class="secondary small" id="refresh-monitoring">Refresh</button></div>
+      <div class="stats" id="mon-stats"></div>
+      <div class="grid two">
+        <div>
+          <h3>Last runs</h3>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Finished</th><th>Trigger</th><th class="num">Fees</th><th class="num">Sent</th><th class="num">Escal.</th><th class="num">Failed</th></tr></thead>
+            <tbody id="runs"></tbody>
+          </table></div>
+        </div>
+        <div>
+          <h3>Settings in use</h3>
+          <table><tbody id="settings"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Overdue plans</h2><a href="plans.html">All plans</a></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Customer</th><th>Plan</th><th>Overdue</th><th>Late fees</th><th class="num">Remaining</th></tr></thead>
+        <tbody id="overdue"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Accounts</h2></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr></thead>
+        <tbody id="users"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody>
+      </table></div>
+    </section>
+  </main>
+
+  <dialog id="reject-dialog">
+    <h2>Reject payment</h2>
+    <p class="small muted">The customer gets an email with this reason.</p>
+    <form id="reject-form" novalidate>
+      <div style="margin-bottom:1rem"><label for="reason">Reason</label><input id="reason" name="reason" minlength="5" maxlength="200" required></div>
+      <div class="actions"><button type="submit" class="danger">Reject</button><button type="button" class="secondary" data-close>Close</button></div>
+    </form>
+  </dialog>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
